@@ -1,0 +1,39 @@
+<div class="form-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <form class="form-horizontal" (submit)="signUp()" >
+                    <div class="heading">Registro Cliente</div>
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="user.nombre"  id="nombre" name="nombre" class="form-control" placeholder="Nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="user.apepat"  id="apepat" name="apepat" class="form-control" placeholder="Apellido Paterno" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="user.apemat"  id="apemat" name="apemat" class="form-control" placeholder="Apellido Materno" >
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <input type="email" [(ngModel)]="user.correo"  id="correo" name="correo" class="form-control" placeholder="Correo" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" [(ngModel)]="user.contrasena"  id="contrasena" name="contrasena" class="form-control" placeholder="Contraseña" required >
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" [(ngModel)]="user.telefono"  id="telefono" name="telefono" class="form-control" placeholder="Teléfono" >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-default">Registrar</button>
+                    <div class="form-footer">
+                        <span><a routerLink="/login" >¿Ya tienes una cuneta?</a></span>
+                        <span><a routerLink="/registeremp" >¿Eres empleado?</a></span>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

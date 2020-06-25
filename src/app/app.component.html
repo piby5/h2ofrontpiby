@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #0f3c49" >
+   <div class="container" >
+        <a class="navbar-brand" routerLink="/" style="color: #9bc600">Cero H2O</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/tasks" style="color: #fff">Task</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/private" style="color: #fff">Private</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/login" style="color: #fff">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/registercli" style="color: #fff">Registrar</a>
+                </li>
+            </ng-container>
+            <ng-template #loggedIn>
+                <li class="nav-item">
+                    <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
+                </li>
+            </ng-template>
+        </ul>
+        </div>
+   </div>
+</nav>
+
+
+<router-outlet></router-outlet>

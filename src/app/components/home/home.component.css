@@ -1,0 +1,22 @@
+.jumbotron{
+    background-image:url("../../../assets/carro.jpg");
+    height: 100%;
+    background-position:top left;
+    background-attachment: fixed;
+    background-size: auto 130%;
+    font-size: 16pt;
+}
+.jumbotron h1{ font-size: 36pt; }
+.texto-verde{ color: #9bc600; }
+.boton{ 
+    color: white ;
+    border:2px solid #9bc600 !important;
+}
+.boton:hover{ 
+    background-color: #9bc600;
+    transition: 0.5s;
+    color: #0f3c49;
+    border:2px solid #0f3c49 !important;
+    
+}
+.card-text{font-size: 15pt;}

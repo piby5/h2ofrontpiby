@@ -1,0 +1,82 @@
+.demo{ background-color: #E5E5E5; }
+.form-horizontal{
+    
+    background-color: #0f3c49;
+    padding: 15px 0 0 0;
+    border-radius: 10px;
+    box-shadow: 0 0 15px -5px #555;
+    overflow: hidden;
+}
+.form-horizontal .heading{
+    color: #9bc600;
+    
+    font-size: 45px;
+    text-align: center;
+    margin: 0 0 30px 0;
+}
+.form-horizontal .form-group{
+    width: 80%;
+    border-radius: 10px;
+    margin: 0 auto 20px;
+    background-color: rgba(255,255,255,0.3);
+}
+.form-horizontal .form-control{
+    color: #fff;
+    background-color: rgba(0,0,0,0.05);
+    height: 55px;
+    padding: 10px 8px 10px 15px;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+}
+.form-control::placeholder{
+    color: #fff;
+    font-size: 14px;
+}
+.form-horizontal .form-control:focus{ box-shadow: none; }
+.form-horizontal .btn{
+    color: #fff;
+    background-color: #9bc600;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 5px #555;
+    width: 80%;
+    padding: 10px;
+    margin: 0 auto -20px;
+    border: none;
+    border-radius: 30px;
+    display: block;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s; 
+}
+.form-horizontal .btn:focus,
+.form-horizontal .btn:hover{
+    color: #9bc600;
+    text-shadow: none;
+}
+.form-horizontal .btn:after{
+    content: '';
+    background-color: #0f3c49;
+    height: 100%;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 25px;
+    transform: scale(0);
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    transition: all 0.5s;
+}
+.form-horizontal .btn:hover:after{ transform: scale(1); }
+.form-horizontal .form-footer{
+    background-color: #fff;
+    text-align: center;
+    padding: 30px 0 20px 0;
+}
+.form-horizontal .form-footer span{
+    display: block;
+    margin-bottom: 15px;
+}
