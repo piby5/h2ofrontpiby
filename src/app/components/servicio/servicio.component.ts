@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataApiService } from 'src/app/services/data-api.service';
 import { environment } from 'src/environments/environment';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-servicio',

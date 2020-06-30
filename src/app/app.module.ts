@@ -17,10 +17,8 @@ import { ProfileComponent } from './components/users/profile/profile.component';
 
 import {AuthGuard} from './auth.guard';
 import {TokenInterceptorService} from './services/token-interceptor.service';
-import { SolicitudComponent } from './components/solicitud/solicitud.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { SolicitarComponent } from './components/solicitar/solicitar.component';
-import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
 
 
@@ -33,10 +31,8 @@ import { ServiciosComponent } from './components/servicios/servicios.component';
     RegisterempComponent,
     HomeComponent,
     ProfileComponent,
-    SolicitudComponent,
     ServicioComponent,
     SolicitarComponent,
-    SolicitudesComponent,
     ServiciosComponent
   ],
   imports: [
