@@ -98,19 +98,17 @@ export class SolicitarComponent implements OnInit {
       .addTo(this.mapa);
   }
 
-  solicitarServ() {
+  confirmar() {
     //console.log(this.solicitud);
     if(this.solicitud._id==null){
       this._apiService.solicitarServicio(this.solicitud).subscribe( res => {
         console.log(res);
-
-        this.router.navigate([`/solicitudes`]);
+        this.router.navigate([`/servicios/solicitud/${res._id}`]);
       }, err => console.log(err));
     }else{
       this._apiService.editarSolicitud(this.solicitud).subscribe( res => {
         console.log(res);
-
-        this.router.navigate([`/solicitudes/${this.solicitud._id}`]);
+        this.router.navigate([`/servicios/solicitud/${this.solicitud._id}`]);
       }, err => console.log(err));
     }
   }

@@ -39,6 +39,13 @@ export class DataApiService {
     return this.http.get<any>(this.URL+`servicios/${id}`);
   }
 
+  getServicios(rol=2){
+    if(rol == 0)
+      return this.http.get<any>(this.URL+`servicios`);
+    else
+      return this.http.get<any>(this.URL+`servicios/${rol}`);
+  }
+
   editarServicio(servicio){
     return this.http.put<any>(this.URL+"servicios",servicio);
   }

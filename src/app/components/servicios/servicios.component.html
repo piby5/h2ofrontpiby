@@ -1,0 +1,27 @@
+<div class="container my-2">
+    <table class="table table-sm text-center">
+        <thead>
+            <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Autómovil</th>
+                <th scope="col">Servicio</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Forma de pago</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let servicio of servicios">
+                <th scope="row"> {{servicio.info.fecha | date: 'dd/MMM/yyyy, H:mm a'}} </th>
+                <td>{{this.tipoAuto[servicio.info.tipoAuto]}}</td>
+                <td>{{this.tipoServicio[servicio.info.tipoServicio]}}</td>
+                <td>{{servicio.total | currency}}</td>
+                <td>
+                    <i *ngIf="servicio.info.tipoPago == 0" class="fas fa-money-bill-wave texto-verde"></i>
+                    <i *ngIf="servicio.info.tipoPago == 1" class="far fa-credit-card"></i>
+                </td>
+                <td><a (click)="verDetalles(servicio._id)" class="badge btn-secondary text-white">Detalles</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

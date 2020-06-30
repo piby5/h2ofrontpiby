@@ -1,6 +1,6 @@
 <div class="container my-2 col-md-8 col-lg-6">
     <h2>Solicitud de Servicio</h2>
-    <form id="formServicio" (submit)="solicitarServ()">
+    <form id="formServicio" (submit)="confirmar()">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Tipo de auto.</h5>
@@ -55,7 +55,7 @@
                     <div class="col-5 custom-control custom-radio custom-control-inline">
                         <input type="radio" [value]="0" id="cash" [(ngModel)]="solicitud.tipoPago" name="forma_pago" class="custom-control-input">
                         <label class="custom-control-label" for="cash">
-                            <i style="font-size: 36px;" class="fas fa-money-bill-wave verde-ceroh2o"></i>
+                            <i style="font-size: 36px;" class="fas fa-money-bill-wave texto-verde"></i>
                             <br>
                             Efectivo
                         </label>

@@ -17,12 +17,11 @@ import { ProfileComponent } from './components/users/profile/profile.component';
 
 import {AuthGuard} from './auth.guard';
 import {TokenInterceptorService} from './services/token-interceptor.service';
-import { TaskComponent } from './components/task/task.component';
-import { PrivateTaskComponent } from './components/private-task/private-task.component';
 import { SolicitudComponent } from './components/solicitud/solicitud.component';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { SolicitarComponent } from './components/solicitar/solicitar.component';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
+import { ServiciosComponent } from './components/servicios/servicios.component';
 
 
 
@@ -34,12 +33,11 @@ import { SolicitudesComponent } from './components/solicitudes/solicitudes.compo
     RegisterempComponent,
     HomeComponent,
     ProfileComponent,
-    TaskComponent,
-    PrivateTaskComponent,
     SolicitudComponent,
     ServicioComponent,
     SolicitarComponent,
-    SolicitudesComponent
+    SolicitudesComponent,
+    ServiciosComponent
   ],
   imports: [
     HttpClientModule,

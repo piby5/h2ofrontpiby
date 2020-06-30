@@ -3,21 +3,21 @@ import { DataApiService } from 'src/app/services/data-api.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-solicitudes',
-  templateUrl: './solicitudes.component.html',
-  styleUrls: ['./solicitudes.component.css']
+  selector: 'app-servicios',
+  templateUrl: './servicios.component.html',
+  styleUrls: ['./servicios.component.css']
 })
-export class SolicitudesComponent implements OnInit {
+export class ServiciosComponent implements OnInit {
+
+  public servicios = [];
 
   tipoAuto = ["HATCHBACK","SEDÁN","SUV","PICK-UP"];
   tipoServicio = ["EXPRÉS","COMPLETO"];
 
-  solicitudes = [];
-
   constructor(private _apiService:DataApiService,private router:Router) { 
-    this._apiService.getSolicitudes().subscribe(res =>{
+    this._apiService.getServicios().subscribe(res =>{
       console.log(res);
-      this.solicitudes = res;
+      this.servicios = res;
     });
   }
 
@@ -25,7 +25,7 @@ export class SolicitudesComponent implements OnInit {
   }
 
   verDetalles(id){
-    this.router.navigate([`/solicitudes/${id}`]);
+    this.router.navigate([`/servicios/${id}`]);
   }
 
 }

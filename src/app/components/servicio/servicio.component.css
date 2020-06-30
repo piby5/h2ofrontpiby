@@ -1,0 +1,12 @@
+.btn-editar{
+    border: 2px solid transparent;
+    color: #9bc600;
+    background-color: #eefac1;
+}
+
+.btn-editar:hover{
+    border: 2px solid #9bc600;
+    background-color: #9bc600;
+    color:white;
+    transition: 0.4s;
+}
