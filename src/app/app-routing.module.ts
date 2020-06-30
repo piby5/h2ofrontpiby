@@ -7,6 +7,10 @@ import { HomeComponent } from './components/home/home.component';
 import {AuthGuard} from './auth.guard';
 import {TaskComponent} from './components/task/task.component';
 import {PrivateTaskComponent} from './components/private-task/private-task.component';
+import { SolicitudComponent } from './components/solicitud/solicitud.component';
+import { ServicioComponent } from './components/servicio/servicio.component';
+import { SolicitarComponent } from './components/solicitar/solicitar.component';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 
 
 const routes: Routes = [
@@ -15,7 +19,13 @@ const routes: Routes = [
   {path:'registeremp', component:RegisterempComponent},
   {path:'registercli', component:RegistercliComponent},
   {path:'tasks', component:TaskComponent},
-  {path:'private', component:PrivateTaskComponent, canActivate: [AuthGuard]}
+  {path:'private', component:PrivateTaskComponent, canActivate: [AuthGuard]},
+  {path:'solicitar', component:SolicitarComponent, canActivate: [AuthGuard]},
+  {path:'solicitudes', component:SolicitudesComponent, canActivate: [AuthGuard]},
+  {path:'solicitudes/:id', component:SolicitudComponent, canActivate: [AuthGuard]},
+  {path:'solicitudes/:id/editar', component:SolicitarComponent, canActivate: [AuthGuard]},
+  {path:'servicios/:id', component:ServicioComponent, canActivate: [AuthGuard]},
+  {path:'**', component: HomeComponent},
 ];
 
 @NgModule({

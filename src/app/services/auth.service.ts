@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import { Observable } from "rxjs/internal/Observable";
-import { map } from "rxjs/operators";
-import { isNullOrUndefined} from "util";
-import {UserempInterface} from '../models/useremp-interface';
-import {UsercliInterface} from '../models/usercli-interface';
 
 
 
@@ -14,17 +9,21 @@ import {UsercliInterface} from '../models/usercli-interface';
 })
 export class AuthService {
 
-  private URL = 'http://localhost:3000/api'
+  private URL = 'http://localhost:3000/api/'
 
   constructor( private http: HttpClient, private router: Router) { }
 
 
-  signUp(user){
-    return this.http.post<any>(this.URL+'/registercli',user);
+  signUpC(user){
+    return this.http.post<any>(this.URL+'clientes',user);
+  }
+
+  signUpE(user){
+    return this.http.post<any>(this.URL+'empleados',user);
   }
 
   signIn(user){
-    return this.http.post<any>(this.URL+'/login',user);
+    return this.http.post<any>(this.URL+'usuarios/iniciar-sesion',user);
   }
  
   loggedIn(){

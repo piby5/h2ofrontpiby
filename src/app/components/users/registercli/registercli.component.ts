@@ -28,12 +28,12 @@ export class RegistercliComponent implements OnInit {
   }
 
   signUp(){
-    this.authService.signUp(this.user)
+    this.authService.signUpC(this.user)
      .subscribe(
        res=>{
          console.log(res);
          localStorage.setItem('token', res.token);
-         this.router.navigate(['/private']);
+         this.router.navigate(['/']);
        }, 
        err=>console.log(err)
      )

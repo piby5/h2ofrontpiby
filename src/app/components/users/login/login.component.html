@@ -1,10 +1,10 @@
 
-<div class="form-bg">
+<div class="form-bg my-2">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+            <div class="col-9 col-sm-7 col-md-4 mx-auto">
                 <form class="form-horizontal" (submit)="signIn()" >
-                    <div class="heading">Ingresar</div>
+                    <h2 class="heading">INGRESAR</h2>
                     <div class="form-group">
                         <input type="email" [(ngModel)]="user.correo"  id="correo" name="correo" class="form-control" placeholder="Correo"  required>
                     </div>
@@ -13,7 +13,7 @@
                     </div>
                     <button type="submit" class="btn btn-default">Ingresar</button>
                     <div class="form-footer">
-                        <span><a routerLink="/registercli" >¿No tienes una cuneta?</a></span>
+                        <span><a routerLink="/registercli" >¿No tienes una cuenta?</a></span>
 
                     </div>
                 </form>

@@ -1,18 +1,15 @@
-a:link {
-    color: #fff;
-  }
-  
-  /* visited link */
-  a:visited {
-    color: #fff;
-  }
-  
-  /* mouse over link */
-  a:hover {
-    color: #fff;
-  }
-  
-  /* selected link */
-  a:active {
-    color: #fff;
-  } 
+.footer{
+  width:100%;
+  background-color: #0f3c49;
+  color: white;
+}
+footer h3{
+  color: #9bc600;
+}
+footer a{
+  color: white;
+}
+footer a:hover{
+  color: #9bc600;
+}
+

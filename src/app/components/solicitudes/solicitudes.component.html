@@ -1,0 +1,20 @@
+<table class="table table-sm">
+    <thead>
+        <tr>
+            <th scope="col">Fecha</th>
+            <th scope="col">Autómovil</th>
+            <th scope="col">Servicio</th>
+            <th scope="col">Subtotal</th>
+            <th scope="col">Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let solicitud of solicitudes">
+            <th scope="row"> {{solicitud.fecha | date: 'dd/MMM/yyyy, H:mm a'}} </th>
+            <td>{{this.tipoAuto[solicitud.tipoAuto]}}</td>
+            <td>{{this.tipoServicio[solicitud.tipoServicio]}}</td>
+            <td>{{solicitud.subtotal | currency}}</td>
+            <td><a (click)="verDetalles(solicitud._id)" class="badge btn-secondary">Detalles</a></td>
+        </tr>
+    </tbody>
+</table>

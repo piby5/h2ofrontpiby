@@ -1,0 +1,79 @@
+<div class="container my-2 col-md-8 col-lg-6">
+    <h2>Solicitud de Servicio</h2>
+    <form id="formServicio" (submit)="solicitarServ()">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tipo de auto.</h5>
+                <div id="autos" class="form-row my-2 border-bottom">
+                    <label class="col-6">
+                        <input type="hidden" [(ngModel)]="solicitud._id" name="_id">
+                        <input type="radio" [(ngModel)]="solicitud.tipoAuto" name="tipoAuto" [value]="0" checked>
+                        <img src="assets/auto-chico2.png" class="img-fluid">
+                        <figcaption>Chico</figcaption>
+                    </label>
+                    <label class="col-6">
+                        <input type="radio" [(ngModel)]="solicitud.tipoAuto" name="tipoAuto" [value]="1">
+                        <img src="assets/auto-mediano.png" class="img-fluid">
+                        <figcaption>Mediano</figcaption>
+                    </label>
+                    <label class="col-6">
+                        <input type="radio" [(ngModel)]="solicitud.tipoAuto" name="tipoAuto" [value]="2">
+                        <img src="assets/auto-suv.png" class="img-fluid">
+                        <figcaption>SUV</figcaption>
+                    </label>
+                    <label class="col-6">
+                        <input type="radio" [(ngModel)]="solicitud.tipoAuto" name="tipoAuto" [value]="3">
+                        <img src="assets/auto-pickup.png" class="img-fluid">
+                        <figcaption>Pick-up</figcaption>
+                    </label>
+                </div>
+                <div class="form-row my-2">
+                    <label class="col-5 col-md-6"><h5 class="card-title">Tipo de servicio.</h5></label>
+                    <select class="custom-select mx-2 col-5 col-md-4" [(ngModel)]="solicitud.tipoServicio" name="tipoServicio" required>
+                        <option selected disabled>Tipo de Servicio</option>
+                        <option [ngValue]="0">Exprés</option>
+                        <option [ngValue]="1">Completo</option>
+                    </select>
+                    <a href="#"><i class="fas fa-question-circle"></i></a>
+                </div>
+                <!-- Mapa (Seleccion en el mapa) -->
+                <div class="form-row my-3">
+                    <label><h5 class="card-title">Ubicación del automóvil.</h5></label>
+                    <div class="col-12">
+                        <div id="mapa"></div>
+                    </div>
+                    <div class="col-12 my-2">
+                        <small id="direccion" class="card-text p-1 fondo-azul rounded verde-ceroh2o"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <label><h5 class="card-title">Forma de pago.</h5></label>
+                <div class="form-row justify-content-center">
+                    <div class="col-5 custom-control custom-radio custom-control-inline">
+                        <input type="radio" [value]="0" id="cash" [(ngModel)]="solicitud.tipoPago" name="forma_pago" class="custom-control-input">
+                        <label class="custom-control-label" for="cash">
+                            <i style="font-size: 36px;" class="fas fa-money-bill-wave verde-ceroh2o"></i>
+                            <br>
+                            Efectivo
+                        </label>
+                    </div>
+                    <div class="col-5 custom-control custom-radio custom-control-inline">
+                        <input type="radio" [value]="1" id="card" [(ngModel)]="solicitud.tipoPago" name="forma_pago" class="custom-control-input">
+                        <label class="custom-control-label" for="card">
+                            <img src="assets/mastercard-logo.png">
+                            <img src="assets/visa-logo.png">
+                            <br>
+                            Tarjeta
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-muted">
+                <button id="btnSolicitar" type="submit" class="float-right btn fondo-verde text-white">Confirmar.</button>
+            </div>
+        </div>
+    </form>
+</div>

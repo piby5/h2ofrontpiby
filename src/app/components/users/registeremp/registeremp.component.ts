@@ -18,8 +18,8 @@ export class RegisterempComponent implements OnInit {
     correo:'',
     contrasena:'',
     telefono:'',
-    sueldo:'',
-    disponibilidad:''
+    sueldo:null,
+    disponibilidad:null
   }
 
   constructor(private authService: AuthService, private router: Router ) { }
@@ -28,12 +28,13 @@ export class RegisterempComponent implements OnInit {
   }
 
   signUp(){
-    this.authService.signUp(this.user)
+    this.authService.signUpE(this.user)
       .subscribe(
         res=>{
           console.log(res);
           localStorage.setItem('token', res.token);
-          this.router.navigate(['/private']);
+          this.router.navigate(['/']);
+          //this.router.navigate(['/servicio']);
         }, 
         err=>console.log(err)
       )

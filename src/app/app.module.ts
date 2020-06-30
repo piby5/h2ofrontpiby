@@ -19,6 +19,10 @@ import {AuthGuard} from './auth.guard';
 import {TokenInterceptorService} from './services/token-interceptor.service';
 import { TaskComponent } from './components/task/task.component';
 import { PrivateTaskComponent } from './components/private-task/private-task.component';
+import { SolicitudComponent } from './components/solicitud/solicitud.component';
+import { ServicioComponent } from './components/servicio/servicio.component';
+import { SolicitarComponent } from './components/solicitar/solicitar.component';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 
 
 
@@ -31,7 +35,11 @@ import { PrivateTaskComponent } from './components/private-task/private-task.com
     HomeComponent,
     ProfileComponent,
     TaskComponent,
-    PrivateTaskComponent
+    PrivateTaskComponent,
+    SolicitudComponent,
+    ServicioComponent,
+    SolicitarComponent,
+    SolicitudesComponent
   ],
   imports: [
     HttpClientModule,
