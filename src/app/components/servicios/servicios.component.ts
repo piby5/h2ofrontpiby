@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from 'src/app/services/data-api.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-servicios',
@@ -14,14 +15,27 @@ export class ServiciosComponent implements OnInit {
   tipoAuto = ["HATCHBACK","SEDÁN","SUV","PICK-UP"];
   tipoServicio = ["EXPRÉS","COMPLETO"];
 
-  constructor(private _apiService:DataApiService,private router:Router) { 
-    this._apiService.getServicios().subscribe(res =>{
+  constructor(private _apiService:DataApiService,private router:Router, private authService:AuthService) {
+    this._apiService.getPendientes(authService.getCurrentUser().rol).subscribe(res =>{
       console.log(res);
       this.servicios = res;
     });
   }
 
   ngOnInit(): void {
+  }
+
+  onChangeSelect(valor){
+    if(valor == "pendientes"){
+      this._apiService.getPendientes(this.authService.getCurrentUser().rol).subscribe(res =>{
+        this.servicios = res;
+      },err => console.log(err));
+    }
+    else{
+      this._apiService.getServicios(this.authService.getCurrentUser().rol).subscribe(res =>{
+        this.servicios = res;
+      },err => console.log(err));
+    }
   }
 
   verDetalles(id){

@@ -22,7 +22,9 @@ export class RegisterempComponent implements OnInit {
     disponibilidad:null
   }
 
-  constructor(private authService: AuthService, private router: Router ) { }
+  constructor(private authService: AuthService, private router: Router ) {
+    this.user.disponibilidad=0;
+   }
 
   ngOnInit(): void {
   }
@@ -32,8 +34,7 @@ export class RegisterempComponent implements OnInit {
       .subscribe(
         res=>{
           console.log(res);
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/']);
+          this.router.navigate(['/empleados']);
           //this.router.navigate(['/servicio']);
         }, 
         err=>console.log(err)

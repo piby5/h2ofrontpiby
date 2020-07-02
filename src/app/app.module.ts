@@ -10,7 +10,6 @@ import { RegisterempComponent } from './components/users/registeremp/registeremp
 import {FormsModule} from '@angular/forms';
 import { HomeComponent } from './components/home/home.component';
 
-
 import { DataApiService } from './services/data-api.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProfileComponent } from './components/users/profile/profile.component';
@@ -20,8 +19,8 @@ import {TokenInterceptorService} from './services/token-interceptor.service';
 import { ServicioComponent } from './components/servicio/servicio.component';
 import { SolicitarComponent } from './components/solicitar/solicitar.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
-
-
+import { EmpleadosComponent } from './components/empleados/empleados.component';
+import { VentasEmpComponent } from './components/ventas-emp/ventas-emp.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +32,9 @@ import { ServiciosComponent } from './components/servicios/servicios.component';
     ProfileComponent,
     ServicioComponent,
     SolicitarComponent,
-    ServiciosComponent
+    ServiciosComponent,
+    EmpleadosComponent,
+    VentasEmpComponent
   ],
   imports: [
     HttpClientModule,

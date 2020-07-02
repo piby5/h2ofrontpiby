@@ -1,0 +1,32 @@
+<div class="container my-2">
+    <div class="row justify-content-center">
+        <div class="col-auto table-responsive">
+        
+            <table class="table table-sm text-center">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Sueldo</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let empleado of empleados">
+                        <td scope="row">{{empleado.info.nombre}} {{empleado.info.apepat}} {{empleado.info.apemat}}</td>
+                        <td>{{empleado.info.correo}}</td>
+                        <td>{{empleado.info.telefono}}</td>
+                        <td>{{empleado.sueldo | currency}}</td>
+                        <td>
+                            <a type="button" (click)="verDetalles(empleado._id)" class="badge btn-secondary text-white">
+                                Detalles
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

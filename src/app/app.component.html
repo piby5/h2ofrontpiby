@@ -1,16 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-light border-bottom">
    <div class="container" >
-        <a class="navbar-brand" routerLink="/" style="color: #9bc600">Cero H2O</a>
+        <a class="navbar-brand my-0 py-0" routerLink="/" style="color: #9bc600">
+            <img class="img-fluid" width="70px" src="assets/cero-simple-copia.png" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ">
+        <ul class="navbar-nav " *ngIf="authService.loggedIn();">
             <li class="nav-item">
                 <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="authService.getCurrentUser().rol == 2">
                 <a class="nav-link" routerLink="/solicitar" routerLinkActive="active" >Solicitar</a>
+            </li>
+            <li class="nav-item dropdown" *ngIf="authService.getCurrentUser().rol == 0">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Empleados
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" routerLink="/registeremp">Dar de alta</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="/empleados">Ver todos</a>
+                    <a class="dropdown-item" routerLink="/ventas-emp">Ventas</a>
+                </div>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -24,10 +37,12 @@
             </ng-container>
             <ng-template #loggedIn>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/perfil" routerLinkActive="active" >Perfil</a>
+                    <a class="nav-link" routerLink="/perfil" title="Ver perfil" routerLinkActive="active">
+                        <i class="fas fa-user-circle"></i> {{authService.getCurrentUser().correo}}
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" (click)="authService.logout()">Salir</a>
+                    <a class="nav-link" style="cursor: pointer;" (click)="authService.logout()">Salir</a>
                 </li>
             </ng-template>
         </ul>

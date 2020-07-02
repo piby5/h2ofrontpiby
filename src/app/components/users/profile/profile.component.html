@@ -1,1 +1,87 @@
-<p>profile works!</p>
+<div class="container my-2">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+            <div class="card">
+                <img class="card-img-top"
+                    src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+                    alt="Foto de perfil">
+                <div class="card-body text-center">
+                    <p class="card-text">ID: {{usuario._id}}</p>
+                    <h4 class="card-title">{{usuario.nombre}} {{usuario.apepat}} {{usuario.apemat}}</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">{{usuario.correo}}</h6>
+                    <p *ngIf="usuario.telefono != ''" class="card-text">Teléfono: {{usuario.telefono}}</p>
+                    <div class="row justify-content-center">
+                        <div class="col-auto">
+                            <!-- Button trigger modal -->
+                            <a class="badge btn-editar" data-toggle="modal" data-target="#exampleModalCenter">
+                                Editar perfil
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <a *ngIf="usuario.rol == 1" (click)="eliminarEmp()" class="badge badge-light text-danger">Eliminar cuenta (E)</a>
+                            <a *ngIf="usuario.rol == 2" (click)="eliminarCli()" class="badge badge-light text-danger">Eliminar cuenta (C)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Actualización de datos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (submit)="editar()">
+                    <div class="form-group row justify-content-center">
+                      <label for="staticEmail" class="col-auto col-form-label">Email</label>
+                      <div class="col-auto">
+                            <input type="text" class="form-control-plaintext border-bottom" name="correo"
+                                [(ngModel)]="usuarioPreEdit.correo" id="staticEmail">
+                      </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <label for="nombre" class="col-auto col-form-label">Nombre</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control-plaintext border-bottom" name="nombre"
+                                [(ngModel)]="usuarioPreEdit.nombre" id="nombre">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <label for="apepat" class="col-auto col-form-label">Apellido Paterno</label>
+                        <div class="col-auto">
+                            <input type="text"  class="form-control-plaintext border-bottom" name="apepat"
+                                [(ngModel)]="usuarioPreEdit.apepat" id="apemat">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <label for="apemat" class="col-auto col-form-label">Apellido Materno</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control-plaintext border-bottom" name="apemat"
+                                [(ngModel)]="usuarioPreEdit.apemat" id="apemat">
+                        </div>
+                    </div>
+                    <div class="form-group row justify-content-center">
+                        <label for="telefono" class="col-auto col-form-label">Teléfono</label>
+                        <div class="col-auto">
+                            <input type="text" class="form-control-plaintext border-bottom" name="telefono"
+                                [(ngModel)]="usuarioPreEdit.telefono" id="telefono">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" (click)="editar()" class="btn btn-confirmar">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

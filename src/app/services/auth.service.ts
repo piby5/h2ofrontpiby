@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import * as jwt_decode from "jwt-decode";
 
 
 
@@ -32,6 +33,10 @@ export class AuthService {
 
   getToken(){
     return localStorage.getItem('token');
+  }
+
+  getCurrentUser(){
+    return jwt_decode(this.getToken());
   }
 
   logout(){

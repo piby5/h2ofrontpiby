@@ -1,0 +1,41 @@
+<div class="container my-2">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-6">
+
+            <h3>Servicios realizados</h3>
+
+            <div class="list-group" id="accordion">
+
+                <div class="card" *ngFor="let emp of empleados; let i=index;">
+                    <div class="card-header" 
+                        id="heading{{i}}" class="list-group-item d-flex justify-content-between align-items-center" 
+                        data-toggle="collapse" [attr.data-target]=" '#collapse'+i " aria-expanded="true" 
+                        [attr.aria-controls]="'collapse'+i">
+                        {{emp.nombre}}
+                        <span class="badge badge-pill text-white" style="background-color: #9bc600;">
+                            {{emp.cantidad_autos}}
+                        </span>
+                    </div>
+                
+                    <div id="collapse{{i}}" class="collapse show" [attr.aria-labelledby]="'heading'+i" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row justify-content-end">
+                                <div class="col-auto">Servicios realizados: {{emp.cantidad_autos}}</div>
+                                <div class="col-auto">Total ventas: {{emp.total_ventas | currency}}</div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-auto">Email: <a href="mailto:{{emp.correo}}">{{emp.correo}}</a></div>
+                                <div class="col-auto">Telefono: <a href="tel:+52{{emp.telefono}}">{{emp.telefono}}</a></div>
+                            </div>
+                            <div class="row justify-content-end">
+                                <div class="col-auto">Sueldo: {{emp.sueldo | currency}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

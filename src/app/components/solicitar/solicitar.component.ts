@@ -22,18 +22,16 @@ export class SolicitarComponent implements OnInit {
     tipoServicio: 0,
     tipoAuto: 0,
     coordenadas: {
-      longitud: '-102.291',
-      latitud: '21.8818'
+      longitud: -102.291,
+      latitud: 21.8818
     },
     fecha: new Date(),
     tipoPago: 0
   };
 
   constructor(private _apiService: DataApiService, private router: Router,private ruta:ActivatedRoute) { 
-
     this.ruta.params.subscribe( res => {
       //console.log(res);
-      
         const {id} = res;
         this._apiService.getSolicitud(id).subscribe( solicitud => {
           this.solicitud=solicitud;

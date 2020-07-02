@@ -10,13 +10,18 @@ import { ServicioComponent } from './components/servicio/servicio.component';
 import { SolicitarComponent } from './components/solicitar/solicitar.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
 import { ServiciosComponent } from './components/servicios/servicios.component';
+import { EmpleadosComponent } from './components/empleados/empleados.component';
+import { VentasEmpComponent } from './components/ventas-emp/ventas-emp.component';
 
 
 const routes: Routes = [
   {path:'login', component:LoginComponent},
-  {path:'registeremp', component:RegisterempComponent},
   {path:'registercli', component:RegistercliComponent},
+  {path:'registeremp', component:RegisterempComponent, canActivate: [AuthGuard]},
   {path:'perfil', component:ProfileComponent, canActivate: [AuthGuard]},
+
+  {path:'empleados', component:EmpleadosComponent, canActivate: [AuthGuard]},
+  {path:'ventas-emp', component:VentasEmpComponent, canActivate: [AuthGuard]},
 
   {path:'solicitar', component:SolicitarComponent, canActivate: [AuthGuard]},
   {path:'solicitudes/:id/editar', component:SolicitarComponent, canActivate: [AuthGuard]},

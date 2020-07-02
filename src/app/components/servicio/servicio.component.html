@@ -6,24 +6,62 @@
                 <div class="card-body text-center">
                     <p><img class="rounded-circle img-fluid" [src]="this.urlMapa" alt="card image"></p>
                     <h5 class="card-title">Automóvil: {{this.tipoAuto[servicio.info.tipoAuto]}}</h5>
-                    <p class="card-text">Tipo de servicio a realizar: {{this.tipoServicio[servicio.info.tipoServicio]}}</p>
+                    <p class="card-text">Tipo de servicio a realizar: {{this.tipoServicio[servicio.info.tipoServicio]}}
+                    </p>
                     <p class="card-text text-muted">{{servicio.info.fecha | date: 'dd/MMM/yyyy, H:mm a'}}</p>
                     <p class="card-text">Total: {{servicio.total | currency}}</p>
                     <p class="card-text">
-                        Forma de pago: 
+                        Forma de pago:
                         <i *ngIf="servicio.info.tipoPago == 0" class="fas fa-money-bill-wave"></i>
                         <i *ngIf="servicio.info.tipoPago == 1" class="far fa-credit-card"></i>
                     </p>
-                    <div *ngIf="servicio.fechaHora.inicio == null" class="row justify-content-center">
+                    <div *ngIf="authService.getCurrentUser().rol == 2 && servicio.fechaHora.inicio == null" class="row justify-content-center">
                         <div class="col-auto">
-                            <a (click)="editar()" class="badge btn-editar">Editar</a>
+                            <a routerLink="/solicitudes/{{servicio.solicitud}}/editar" class="badge btn-editar">
+                                Editar
+                            </a>
                         </div>
                         <div class="col-auto">
                             <a (click)="cancelar()" class="badge badge-light">Cancelar</a>
                         </div>
                     </div>
+
+                    <!--Empleado-->
+                    <div *ngIf=" authService.getCurrentUser().rol == 1" class="row justify-content-center">
+                        <div class="col" *ngIf="servicio.fechaHora.inicio != null">
+                            <p class="card-text" >
+                                Inicio: {{servicio.fechaHora.inicio | date:'H:mm a'}}
+                            </p>
+                        </div>
+                        <div class="col" *ngIf="servicio.fechaHora.inicio != null && servicio.statusServicio == 1">
+                            <p class="card-text" >
+                                Fin: {{servicio.fechaHora.fin | date:'H:mm a'}}
+                            </p>
+                        </div>
+                        <div class="col-auto" *ngIf="servicio.fechaHora.inicio == null">
+                            <!-- Button trigger modal -->
+                            <a type="button" *ngIf="!isEmpArrived"
+                                class="badge badge-light" data-toggle="modal" data-target="#modalRuta">
+                                Ver ruta...
+                            </a>
+                        </div>
+                        <div class="col-auto">
+                            <a *ngIf="servicio.fechaHora.inicio != null && servicio.statusServicio == 0" 
+                                type="button" (click)="finalizarServicio()" 
+                                class="badge text-white" style="background: #0f3c49;">
+                                Finalizar servicio
+                            </a>
+                            <a *ngIf="servicio.fechaHora.inicio == null && isEmpArrived;" type="button" 
+                                (click)="iniciarServicio()" 
+                                class="badge text-white" style="background: #9bc600;">
+                                Empezar lavado!
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
-                <div *ngIf="servicio.statusServicio == 1" class="card-footer badge text-center text-white" style="background-color: #9bc600;">
+                <div *ngIf="servicio.statusServicio == 1" class="card-footer badge text-center text-white"
+                    style="background-color: #9bc600;">
                     <p class="card-text">Finalizado!</p>
                 </div>
                 <div *ngIf="servicio.statusServicio == 0" class="card-footer badge text-center text-white bg-dark">
@@ -33,4 +71,26 @@
         </div>
     </div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRuta"
+    tabindex="-1" role="dialog" aria-labelledby="modalRutaTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Ruta del servicio</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="mapaRuta"></div>
+            </div>
+            <div class="modal-footer">
+                <a type="button" (click)="llegarADestino()" type="button" data-dismiss="modal"
+                    class="badge btn-editar">Llegué..!</a>
+            </div>
+        </div>
+    </div>
 </div>
