@@ -4,7 +4,9 @@
             <div class="row justify-content-end"><a routerLink="/servicios" class="nav-link">Ver servicios</a></div>
             <div class="card text-center">
                 <div class="card-body text-center">
-                    <p><img class="rounded-circle img-fluid" [src]="this.urlMapa" alt="card image"></p>
+                    <p><img (click)="initializeMap()"
+                        data-toggle="modal" data-target="#modalRuta" 
+                        class="rounded-circle img-fluid" [src]="this.urlMapa" alt="card image"></p>
                     <h5 class="card-title">Automóvil: {{this.tipoAuto[servicio.info.tipoAuto]}}</h5>
                     <p class="card-text">Tipo de servicio a realizar: {{this.tipoServicio[servicio.info.tipoServicio]}}
                     </p>
@@ -15,7 +17,7 @@
                         <i *ngIf="servicio.info.tipoPago == 0" class="fas fa-money-bill-wave"></i>
                         <i *ngIf="servicio.info.tipoPago == 1" class="far fa-credit-card"></i>
                     </p>
-                    <div *ngIf="authService.getCurrentUser().rol == 2 && servicio.fechaHora.inicio == null" class="row justify-content-center">
+                    <div *ngIf="authService.loggedIn() && servicio.fechaHora.inicio == null" class="row justify-content-center">
                         <div class="col-auto">
                             <a routerLink="/solicitudes/{{servicio.solicitud}}/editar" class="badge btn-editar">
                                 Editar
@@ -27,7 +29,7 @@
                     </div>
 
                     <!--Empleado-->
-                    <div *ngIf=" authService.getCurrentUser().rol == 1" class="row justify-content-center">
+                    <div *ngIf="authService.loggedIn()" class="row justify-content-center">
                         <div class="col" *ngIf="servicio.fechaHora.inicio != null">
                             <p class="card-text" >
                                 Inicio: {{servicio.fechaHora.inicio | date:'H:mm a'}}
@@ -40,10 +42,10 @@
                         </div>
                         <div class="col-auto" *ngIf="servicio.fechaHora.inicio == null">
                             <!-- Button trigger modal -->
-                            <a type="button" *ngIf="!isEmpArrived"
+                            <!-- <a type="button" *ngIf="!isEmpArrived" (click)="showMap()"
                                 class="badge badge-light" data-toggle="modal" data-target="#modalRuta">
                                 Ver ruta...
-                            </a>
+                            </a> -->
                         </div>
                         <div class="col-auto">
                             <a *ngIf="servicio.fechaHora.inicio != null && servicio.statusServicio == 0" 

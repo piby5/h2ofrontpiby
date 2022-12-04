@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  api_uri: 'http://localhost:3000/api/',
   mapboxKey: 'pk.eyJ1Ijoic2NhcmZhY2VtdGMiLCJhIjoiY2thaDdqd25pMGd5ejJxcG5lN2VqdGxpOCJ9.SXYAXmiDbjKh2VVemPH1eg'
 };
 
@@ -14,4 +15,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

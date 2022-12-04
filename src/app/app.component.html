@@ -11,10 +11,10 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/servicios" routerLinkActive="active">Servicios</a>
             </li>
-            <li class="nav-item" *ngIf="authService.getCurrentUser().rol == 2">
+            <li class="nav-item" *ngIf="isLogged">
                 <a class="nav-link" routerLink="/solicitar" routerLinkActive="active" >Solicitar</a>
             </li>
-            <li class="nav-item dropdown" *ngIf="authService.getCurrentUser().rol == 0">
+            <li class="nav-item dropdown" *ngIf="isLogged">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Empleados
                 </a>
@@ -27,7 +27,7 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <ng-container *ngIf="!authService.loggedIn(); else loggedIn">
+            <ng-container *ngIf="!isLogged; else loggedIn">
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/login" routerLinkActive="active">Ingresar</a>
                 </li>
@@ -38,7 +38,7 @@
             <ng-template #loggedIn>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/perfil" title="Ver perfil" routerLinkActive="active">
-                        <i class="fas fa-user-circle"></i> {{authService.getCurrentUser().correo}}
+                        <i class="fas fa-user-circle"></i> {{usuario.correo}}
                     </a>
                 </li>
                 <li class="nav-item">

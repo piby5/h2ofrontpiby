@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import * as jwt_decode from "jwt-decode";
+import { environment } from 'src/environments/environment';
 
 
 
@@ -10,33 +11,53 @@ import * as jwt_decode from "jwt-decode";
 })
 export class AuthService {
 
-  private URL = 'http://localhost:3000/api/'
+  private URI = environment.api_uri;
+
+  currentUser = {
+    _id: '',
+    nombre: '',
+    apepat: '',
+    apemat: '',
+    correo: '',
+    usuario: '',
+    telefono: '',
+    roles:[]
+  };
 
   constructor( private http: HttpClient, private router: Router) { }
 
+  signUp(user){
+    return this.http.post<any>(this.URI+'auth/signup',user);
+  }
 
   signUpC(user){
-    return this.http.post<any>(this.URL+'clientes',user);
+    return this.http.post<any>(this.URI+'clientes',user);
   }
 
   signUpE(user){
-    return this.http.post<any>(this.URL+'empleados',user);
+    return this.http.post<any>(this.URI+'empleados',user);
   }
 
   signIn(user){
-    return this.http.post<any>(this.URL+'usuarios/iniciar-sesion',user);
+    return this.http.post<any>(this.URI+'auth/signin',user);
   }
  
   loggedIn(){
-    return !!localStorage.getItem('token');
+    return !!(localStorage.getItem('token') || sessionStorage.getItem('token'));
   }
 
   getToken(){
     return localStorage.getItem('token');
   }
 
-  getCurrentUser(){
-    return jwt_decode(this.getToken());
+  getCurrentUserID(){
+    const decode = jwt_decode(this.getToken());
+    return decode._id;
+  }
+
+  getSessionExpiresIn(){
+    const decode = jwt_decode(this.getToken());
+    return decode.expiresIn;
   }
 
   logout(){
@@ -50,21 +71,21 @@ export class AuthService {
   });
 
   registerUseremp(nombre:string, apepat:string, apemat:string, correo:string, contrasena:string, telefono:string, sueldo:string, disponibilidad:string){
-    const url_api = "http://localhost:4200/api/components/users/registerUseremp";
-    return this.http.post<UserempInterface>(url_api, {nombre:nombre, apepat:apepat, apemat:apemat, correo:correo, contrasena:contrasena, telefono:telefono, sueldo:sueldo, disponibilidad:disponibilidad},
+    const URI_api = "http://localhost:4200/api/components/users/registerUseremp";
+    return this.http.post<UserempInterface>(URI_api, {nombre:nombre, apepat:apepat, apemat:apemat, correo:correo, contrasena:contrasena, telefono:telefono, sueldo:sueldo, disponibilidad:disponibilidad},
       {headers: this.headers}).pipe(map(data=>data));
   }
 
 
   registerUsercli(nombre:string, apepat:string, apemat:string, correo:string, contrasena:string, telefono:string){
-    const url_api = "http://localhost:4200/api/components/users/registerUsercli";
-    return this.http.post<UsercliInterface>(url_api, {nombre:nombre, apepat:apepat, apemat:apemat, correo:correo, contrasena:contrasena, telefono:telefono},
+    const URI_api = "http://localhost:4200/api/components/users/registerUsercli";
+    return this.http.post<UsercliInterface>(URI_api, {nombre:nombre, apepat:apepat, apemat:apemat, correo:correo, contrasena:contrasena, telefono:telefono},
       {headers: this.headers}).pipe(map(data=>data));
   }
 
   loginuser(correo:string, contrasena:string):Observable<any>{
-    const url_api= "http://localhost:4200/api/components/users/login?include=user";
-    return this.http.post<UserempInterface>(url_api,{correo:correo, contrasena:contrasena}, {headers:this.headers}).pipe(map(data=>data));
+    const URI_api= "http://localhost:4200/api/components/users/login?include=user";
+    return this.http.post<UserempInterface>(URI_api,{correo:correo, contrasena:contrasena}, {headers:this.headers}).pipe(map(data=>data));
   }
 
   setUser(user:UserempInterface): void{
@@ -92,9 +113,9 @@ export class AuthService {
 
   logoutUser(){
     let accessToken = localStorage.getItem('accessToken')
-    const url_api= `http://localhost:4200/api/users/logout?access_token=${accessToken}`;
+    const URI_api= `http://localhost:4200/api/users/logout?access_token=${accessToken}`;
     localStorage.removeItem("accessToken")
     localStorage.removeItem("currentUser")
-    return this.http.post<UserempInterface>(url_api, {headers:this.headers});
+    return this.http.post<UserempInterface>(URI_api, {headers:this.headers});
   }*/ 
 }

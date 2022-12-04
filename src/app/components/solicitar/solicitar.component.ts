@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import * as Mapboxgl from "mapbox-gl";
-import { isNullOrUndefined } from 'util';
 import { DataApiService } from 'src/app/services/data-api.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-solicitar',
@@ -29,7 +29,8 @@ export class SolicitarComponent implements OnInit {
     tipoPago: 0
   };
 
-  constructor(private _apiService: DataApiService, private router: Router,private ruta:ActivatedRoute) { 
+  constructor(private _apiService: DataApiService, private router: Router,
+    private ruta:ActivatedRoute, private socketService: WebsocketService) { 
     this.ruta.params.subscribe( res => {
       //console.log(res);
         const {id} = res;
@@ -39,7 +40,7 @@ export class SolicitarComponent implements OnInit {
           this.mapa.setZoom(15);
         }, err => {
           //console.log(err);
-          if(isNullOrUndefined(res.id))
+          if(res.id == (null || undefined))
             this.inicializarMapa();
         });
     });
@@ -51,10 +52,11 @@ export class SolicitarComponent implements OnInit {
 
   inicializarMapa(){
     Mapboxgl.accessToken = environment.mapboxKey;
+    const { longitud, latitud } = this.solicitud.coordenadas;
     this.mapa = new Mapboxgl.Map({
       container: 'mapa', // container id
       style: 'mapbox://styles/mapbox/streets-v11',
-      center: [this.solicitud.coordenadas.longitud,this.solicitud.coordenadas.latitud], // starting position Ags,Ags.,Mx
+      center: [longitud,latitud], // starting position Ags,Ags.,Mx
       zoom: 12 // starting zoom
     });
     // Add zoom and rotation controls to the map.
@@ -70,17 +72,29 @@ export class SolicitarComponent implements OnInit {
     //agrega al mapa un marcador nuevo con las coordenadas de inicialización
     this.crearMarcador(this.solicitud.coordenadas);
 
-    this.geolocateControl.on('geolocate',(gc)=>{
+    this.geolocateControl.on('geolocate',(gc) => {
+      const {longitude, latitude} = gc.coords;
+      // this.marker.setLngLat([longitude, latitude]);
       this.solicitud.coordenadas = {
-        longitud:gc.coords.longitude,
-        latitud:gc.coords.latitude
+        longitud: longitude,
+        latitud: latitude
       };
-      this.marker.setLngLat([this.solicitud.coordenadas.longitud,this.solicitud.coordenadas.latitud]);
     });
 
     this.marker.on('dragend', res => {
-      console.log(res.target._lngLat);
-      let { lng, lat } = res.target._lngLat;
+      // console.log(res.target._lngLat);
+      const { lng, lat } = res.target._lngLat;
+      this.solicitud.coordenadas = {
+        longitud: lng,
+        latitud: lat
+      };
+    });
+
+    this.mapa.on('click' || 'touchstart', (e) => {
+      e.preventDefault();
+      console.log(e.lngLat);
+      const { lng, lat } = e.lngLat;
+      this.marker.setLngLat([lng, lat]);
       this.solicitud.coordenadas = {
         longitud: lng,
         latitud: lat
@@ -99,9 +113,19 @@ export class SolicitarComponent implements OnInit {
   confirmar() {
     //console.log(this.solicitud);
     if(this.solicitud._id==null){
-      this._apiService.solicitarServicio(this.solicitud).subscribe( res => {
-        console.log(res);
-        this.router.navigate([`/servicios/solicitud/${res._id}`]);
+      this._apiService.crearSolicitud(this.solicitud).subscribe( rsol => {
+        console.log('Solicitud:', rsol);
+        if(!rsol.solicitud._id) return;
+        const servicio = {
+          solicitud: rsol.solicitud
+        }
+        this._apiService.crearServicio(servicio).subscribe(rsrv => {
+          console.log('Servicio:', rsrv);
+          if(!rsrv.servicio._id) return;
+          this.router.navigate([`/servicios/${rsrv.servicio._id}`]);
+          /* Llamada a socket */
+          this.socketService.findEmpleado(rsrv.servicio._id);
+        });
       }, err => console.log(err));
     }else{
       this._apiService.editarSolicitud(this.solicitud).subscribe( res => {

@@ -18,8 +18,8 @@
                             </a>
                         </div>
                         <div class="col-auto">
-                            <a *ngIf="usuario.rol == 1" (click)="eliminarEmp()" class="badge badge-light text-danger">Eliminar cuenta (E)</a>
-                            <a *ngIf="usuario.rol == 2" (click)="eliminarCli()" class="badge badge-light text-danger">Eliminar cuenta (C)</a>
+                            <!-- <a *ngIf="usuario.rol == 1" (click)="eliminarEmp()" class="badge badge-light text-danger">Eliminar cuenta (E)</a> -->
+                            <a (click)="eliminarCli()" class="badge badge-light text-danger">Eliminar cuenta (C)</a>
                         </div>
                     </div>
                 </div>

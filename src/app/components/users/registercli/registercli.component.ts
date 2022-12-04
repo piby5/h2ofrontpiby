@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from 'src/app/services/auth.service';
 import {Router} from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 
@@ -31,11 +32,14 @@ export class RegistercliComponent implements OnInit {
     this.authService.signUpC(this.user)
      .subscribe(
        res=>{
-         console.log(res);
+        //  console.log(res);
          localStorage.setItem('token', res.token);
          this.router.navigate(['/']);
        }, 
-       err=>console.log(err)
+       err=>{
+        Swal.fire(err.status.toString(), err.error.message || err.error )
+        // console.log(err)
+      }
      )
    }
 

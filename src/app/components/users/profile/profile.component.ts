@@ -16,7 +16,7 @@ export class ProfileComponent implements OnInit {
     apemat:'',
     correo:'',
     telefono:'',
-    rol:null
+    roles:null
   };
 
   cliente = {};
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
   };
 
   constructor(private _authService:AuthService,private _apiService:DataApiService) {
-    this._apiService.getUsuario(_authService.getCurrentUser()._id).subscribe(res =>{
+    this._apiService.getUsuario(_authService.getCurrentUserID()).subscribe(res =>{
       console.log(res);
       this.usuario=res;
       this.usuarioPreEdit=this.usuario;

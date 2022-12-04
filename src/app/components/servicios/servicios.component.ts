@@ -16,7 +16,7 @@ export class ServiciosComponent implements OnInit {
   tipoServicio = ["EXPRÉS","COMPLETO"];
 
   constructor(private _apiService:DataApiService,private router:Router, private authService:AuthService) {
-    this._apiService.getPendientes(authService.getCurrentUser().rol).subscribe(res =>{
+    this._apiService.getPendientes().subscribe(res =>{
       console.log(res);
       this.servicios = res;
     });
@@ -27,12 +27,12 @@ export class ServiciosComponent implements OnInit {
 
   onChangeSelect(valor){
     if(valor == "pendientes"){
-      this._apiService.getPendientes(this.authService.getCurrentUser().rol).subscribe(res =>{
+      this._apiService.getPendientes().subscribe(res =>{
         this.servicios = res;
       },err => console.log(err));
     }
     else{
-      this._apiService.getServicios(this.authService.getCurrentUser().rol).subscribe(res =>{
+      this._apiService.getServicios().subscribe(res =>{
         this.servicios = res;
       },err => console.log(err));
     }

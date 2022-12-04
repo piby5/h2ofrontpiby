@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataApiService } from 'src/app/services/data-api.service';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
 import * as MapboxGl from "mapbox-gl";
-import { isNullOrUndefined } from 'util';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-servicio',
@@ -13,7 +13,8 @@ import { isNullOrUndefined } from 'util';
 })
 export class ServicioComponent implements OnInit {
 
-  mapa:MapboxGl.Map;
+  mapa: MapboxGl.Map;
+  geolocateControl: MapboxGl.GeolocateControl;
 
   tipoAuto = ["HATCHBACK","SEDÁN","SUV","PICK-UP"];
   tipoServicio = ["EXPRÉS","COMPLETO"];
@@ -44,12 +45,13 @@ export class ServicioComponent implements OnInit {
   isEmpArrived :boolean;
 
   constructor(private _apiService:DataApiService, public authService:AuthService,
-      private ruta:ActivatedRoute,private router:Router) {
-
+      private ruta:ActivatedRoute,private router:Router,
+      private socketService: WebsocketService) {
+    
     this.isEmpArrived=false;
 
     const { id } = this.ruta.snapshot.params;
-    let consulta:any;
+    var consulta:any;
     if(!router.url.includes('/solicitud')){
       consulta = this._apiService.getServicio(id);
     }else{
@@ -59,19 +61,61 @@ export class ServicioComponent implements OnInit {
 
     consulta.subscribe( res => {
       this.servicio = res;
-      //console.log(this.servicio);
-      const lng = this.servicio.info.coordenadas.longitud;
-      const lat = this.servicio.info.coordenadas.latitud;
-      this.urlMapa = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s(${lng},${lat})/${lng},${lat},15.5,0,50/350x350?access_token=${environment.mapboxKey}`;
+      console.log(this.servicio);
+      const {coordenadas} = this.servicio.info;
+      this.urlMapa = this._apiService.getUrlMapaEstatico(coordenadas);
+      // const lng = this.servicio.info.coordenadas.longitud;
+      // const lat = this.servicio.info.coordenadas.latitud;
+      // this.urlMapa = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/pin-s(${lng},${lat})/${lng},${lat},15.5,0,50/350x350?access_token=${environment.mapboxKey}`;
 
-      if(authService.getCurrentUser().rol == 1)
-        this.inicializarRuta();
+      // if(authService.getCurrentUser().rol == 1)
+      // this.initializeMap();
 
     });
     
   }
 
-  ngOnInit(): void {  }
+  ngOnInit(): void {
+  }
+
+  initializeMap(){
+    MapboxGl.accessToken = environment.mapboxKey;
+    const destino = this.servicio.info.coordenadas;
+    this.mapa = new MapboxGl.Map({
+      container: 'mapaRuta', // container id
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [destino.longitud, destino.latitud], // starting position LNG,LAT de Ags.
+      zoom: 12 // starting zoom
+    });
+    this.mapa.addControl(new MapboxGl.NavigationControl());
+    this.geolocateControl = new MapboxGl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      showAccuracyCircle: false,
+      trackUserLocation: true,
+      showUserHeading: true
+    });
+    this.mapa.addControl(this.geolocateControl);
+    
+    new MapboxGl.Marker()
+      .setLngLat([destino.longitud, destino.latitud])
+      .addTo(this.mapa);
+    
+    this.mapa.on('load' || 'sourcedata', (e) => {
+      this.mapa.resize();
+    });
+
+    this.geolocateControl.on('geolocate', (e) => {
+      // console.log(e.coords);
+      const {latitude, longitude} = e.coords;
+      const location = {
+        longitud: longitude,
+        latitud: latitude
+      }
+      this.getRuta(location,destino);
+    });
+  }
 
   cancelar(){
     this._apiService.borrarServicio(this.servicio._id).subscribe( res => {
@@ -79,42 +123,6 @@ export class ServicioComponent implements OnInit {
         console.log(resp);
         this.router.navigate(['/solicitar']);
       });
-    });
-  }
-
-  inicializarRuta(){
-    MapboxGl.accessToken = environment.mapboxKey;
-    this.mapa = new MapboxGl.Map({
-      container: 'mapaRuta', // container id
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [this.servicio.info.coordenadas.longitud, this.servicio.info.coordenadas.latitud], // starting position LNG,LAT de Ags.
-      zoom: 12 // starting zoom
-    });
-    
-    this.mapa.addControl(new MapboxGl.NavigationControl());
-    
-    let geolocateControl = new MapboxGl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    });
-    this.mapa.addControl(geolocateControl);
-
-    geolocateControl.on('geolocate',(gc)=>{
-      let inicio = {
-        longitud: gc.coords.longitude,
-        latitud: gc.coords.latitude
-      };
-      this.getRuta(inicio,this.servicio.info.coordenadas);
-    });
-
-    new MapboxGl.Marker()
-      .setLngLat([this.servicio.info.coordenadas.longitud, this.servicio.info.coordenadas.latitud])
-      .addTo(this.mapa);
-
-    this.mapa.on('render',map => {
-      this.mapa.resize();
     });
   }
 
@@ -174,6 +182,13 @@ export class ServicioComponent implements OnInit {
     this._apiService.editarServicio(this.servicio).subscribe(res =>{
       console.log(res);
     },err => console.log(err));
+  }
+
+  sendCoords(){
+    this.socketService.sendCoords({
+      latitud: '-6.512',
+      longitud: '12.0564'
+    });
   }
 
 }
