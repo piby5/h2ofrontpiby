@@ -9,6 +9,7 @@ import { DataApiService } from './services/data-api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = "piby";
   isLogged: boolean;
   usuario = {
       _id:'',
